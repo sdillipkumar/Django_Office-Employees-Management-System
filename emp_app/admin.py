@@ -6,4 +6,5 @@ from emp_app.models import *
 admin.site.register(Department)
 admin.site.register(Role)
 admin.site.register(Employee)
-
+class EmployeeAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'dept', 'role', 'phone', 'email', 'hire_date')
