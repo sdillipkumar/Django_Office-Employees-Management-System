@@ -26,10 +26,10 @@ class Employee(models.Model):
     first_name = models.CharField(max_length=100, null=False)
     last_name = models.CharField(max_length=100)
     dept = models.ForeignKey(Department, on_delete=models.CASCADE)
-    salary = models.IntegerField(default=0)
-    bonus = models.IntegerField(default=0)
+    salary = models.PositiveIntegerField()
+    bonus = models.PositiveIntegerField()
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
-    phone = models.IntegerField(default=0)
+    phone = models.BigIntegerField()
     email = models.EmailField(max_length=254, null=True, blank=True)
     hire_date = models.DateField(null=True, blank=True)
 
