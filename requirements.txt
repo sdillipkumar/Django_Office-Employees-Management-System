@@ -2,7 +2,6 @@ asgiref==3.8.1
 colorama==0.4.6
 dj-database-url==2.3.0
 Django==5.2.1
-django-jazzmin==3.0.1
 gunicorn==23.0.0
 iniconfig==2.1.0
 packaging==25.0
@@ -13,4 +12,4 @@ pytest-django==4.11.1
 sqlparse==0.5.3
 typing_extensions==4.13.2
 tzdata==2025.2
-jazzmin>=2.6.0
+**django-jazzmin==3.0.1**  ← ✅ Use this
