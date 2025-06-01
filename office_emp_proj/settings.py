@@ -81,17 +81,16 @@ WSGI_APPLICATION = 'office_emp_proj.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-     DATABASES = {
-         'default': {
-             'ENGINE': 'django.db.backends.postgresql',
-             'NAME': 'office-emp-db',
-             'USER': 'office_emp_db_user',
-             'PASSWORD': '7TvYAaX6u8GzphW0EfpVTeNSAEEH5MZ2',
-             'HOST': 'dpg-d0u06midbo4c73a8enrg-a',
-             'PORT': '5432',
-         }
-     }
-     
+ DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME', 'office-emp-db'),
+        'USER': os.environ.get('DB_USER', 'office_emp_db_user'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', '7TvYAaX6u8GzphW0EfpVTeNSAEEH5MZ2'),
+        'HOST': os.environ.get('DB_HOST', 'dpg-d0u06midbo4c73a8enrg-a.oregon-postgres.render.com'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
+    }
+}
 
 
 # Password validation
