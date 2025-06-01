@@ -116,24 +116,23 @@ def upload_csv(request):
             reader = csv.DictReader(decoded_file)
             for row in reader:
                 try:
-                    # Fetch or create Department and Role by name
-                    dept, _ = Department.objects.get_or_create(name=row['dept'])
-                    role, _ = Role.objects.get_or_create(name=row['role'])
+                    dept, _ = Department.objects.get_or_create(name=row['dept'].strip())
+                    role, _ = Role.objects.get_or_create(name=row['role'].strip())
 
-                    # Create Employee
                     Employee.objects.create(
-                        first_name=row['first_name'],
-                        last_name=row['last_name'],
-                        email=row['email'],
-                        phone=row['phone'],
-                        salary=row['salary'],
-                        bonus=row['bonus'],
+                        first_name=row['first_name'].strip(),
+                        last_name=row['last_name'].strip(),
+                        email=row['email'].strip(),
+                        phone=int(row['phone']),  # ✅ Fix here
+                        salary=int(row['salary']),  # ✅ Fix here
+                        bonus=int(row['bonus']),  # ✅ Fix here
                         dept=dept,
                         role=role,
                         hire_date=datetime.strptime(row['hire_date'], "%Y-%m-%d").date() if row['hire_date'] else None
                     )
                 except Exception as e:
                     message += f"Error in row: {row}. Error: {str(e)}\n"
+
             if not message:
                 message = "CSV uploaded and employees saved successfully."
 
