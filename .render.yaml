@@ -2,8 +2,22 @@ services:
   - type: web
     name: django-office-emp
     env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn office_emp_proj.wsgi:application"
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+      python manage.py makemigrations
+      python manage.py migrate
+    startCommand: gunicorn office_emp_proj.wsgi:application
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.10
+      - key: DATABASE_URL
+        value: postgresql://office_emp_db_user:7TvYAaX6u8GzphW0EfpVTeNSAEEH5MZ2@dpg-d0u06midbo4c73a8enrg-a/office_emp_db
+      - key: DJANGO_SETTINGS_MODULE
+        value: office_emp_proj.settings
+      - key: SECRET_KEY
+        value:'django-insecure-*2mr@=j@bhpoxi#zc-iw-bkg&l28y(!ztmox&0(tm7o78+shtv'
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: office-employees-management.onrender.com,www.office-employees-management.onrender.com
