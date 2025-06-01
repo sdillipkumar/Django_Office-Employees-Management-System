@@ -104,6 +104,7 @@ def remove_employee(request, emp_id):
     emp.delete()
     return redirect('all_Employee')  # Redirect back to the dropdown page
 
+
 def upload_csv(request):
     message = ''
     if request.method == 'POST':
@@ -115,9 +116,11 @@ def upload_csv(request):
             reader = csv.DictReader(decoded_file)
             for row in reader:
                 try:
-                    dept = Department.objects.get(id=row['dept_id'])
-                    role = Role.objects.get(id=row['role_id'])
+                    # Fetch or create Department and Role by name
+                    dept, _ = Department.objects.get_or_create(name=row['dept'])
+                    role, _ = Role.objects.get_or_create(name=row['role'])
 
+                    # Create Employee
                     Employee.objects.create(
                         first_name=row['first_name'],
                         last_name=row['last_name'],
@@ -133,4 +136,5 @@ def upload_csv(request):
                     message += f"Error in row: {row}. Error: {str(e)}\n"
             if not message:
                 message = "CSV uploaded and employees saved successfully."
+
     return render(request, 'upload_csv.html', {'message': message})
