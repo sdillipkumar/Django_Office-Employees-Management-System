@@ -4,6 +4,7 @@ services:
     env: python
     buildCommand: |
       pip install -r requirements.txt
+      python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('dillip', 'dillip@example.com', '0093') if not User.objects.filter(username='dillip').exists() else None"
       python manage.py collectstatic --noinput
       python manage.py makemigrations
       python manage.py migrate
