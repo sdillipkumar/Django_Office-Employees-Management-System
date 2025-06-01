@@ -81,13 +81,17 @@ WSGI_APPLICATION = 'office_emp_proj.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3',  # fallback (optional)
-        conn_max_age=600,
-        ssl_require=True
-    )
-}
+     DATABASES = {
+         'default': {
+             'ENGINE': 'django.db.backends.postgresql',
+             'NAME': 'office-emp-db',
+             'USER': 'office_emp_db_user',
+             'PASSWORD': '7TvYAaX6u8GzphW0EfpVTeNSAEEH5MZ2',
+             'HOST': 'dpg-d0u06midbo4c73a8enrg-a',
+             'PORT': '5432',
+         }
+     }
+     
 
 
 # Password validation
