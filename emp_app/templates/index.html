@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Employee Management System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Background gradient with subtle animated sparkles */
+    body {
+      background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+      position: relative;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    /* Animate fadeInUp */
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(1.5rem);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .fadeInUp {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+    /* Animated sparkles using pseudo elements */
+    .sparkle-wrapper {
+      position: absolute;
+      top: 0; left:0; right:0; bottom:0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .sparkle {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: sparkle 3s linear infinite;
+      filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.3));
+    }
+    @keyframes sparkle {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      50% {
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+    /* Mobile menu slide-down animation */
+    .menu-slide-enter {
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.4s ease, opacity 0.4s ease;
+    }
+    .menu-slide-enter-active {
+      max-height: 300px;
+      opacity: 1;
+    }
+    .menu-slide-leave {
+      max-height: 300px;
+      opacity: 1;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+    }
+    .menu-slide-leave-active {
+      max-height: 0;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body class="relative flex flex-col min-h-screen text-white font-sans">
+
+  <!-- Sparkles -->
+  <div class="sparkle-wrapper" aria-hidden="true">
+    <span class="sparkle" style="width:6px; height:6px; top: 20%; left: 10%; animation-delay: 0s;"></span>
+    <span class="sparkle" style="width:8px; height:8px; top: 60%; left: 25%; animation-delay: 1s;"></span>
+    <span class="sparkle" style="width:5px; height:5px; top: 80%; left: 40%; animation-delay: 0.5s;"></span>
+    <span class="sparkle" style="width:7px; height:7px; top: 30%; left: 70%; animation-delay: 1.5s;"></span>
+    <span class="sparkle" style="width:4px; height:4px; top: 50%; left: 80%; animation-delay: 2s;"></span>
+    <span class="sparkle" style="width:6px; height:6px; top: 10%; left: 90%; animation-delay: 1.2s;"></span>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="bg-indigo-900/90 backdrop-blur-md sticky top-0 z-50 shadow-lg">
+    <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+      <a href="#" class="text-3xl font-extrabold tracking-wide text-indigo-300 hover:text-white transition">EmpManage</a>
+      <div class="hidden md:flex space-x-10 font-semibold text-indigo-200">
+        <a href="#" class="relative group hover:text-white">
+          Home
+          <span class="absolute left-0 -bottom-1 w-full h-0.5 bg-indigo-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+        </a>
+        <a href="#" class="relative group hover:text-white">
+          Employees
+          <span class="absolute left-0 -bottom-1 w-full h-0.5 bg-indigo-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+        </a>
+        <a href="#" class="relative group hover:text-white">
+          About
+          <span class="absolute left-0 -bottom-1 w-full h-0.5 bg-indigo-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+        </a>
+        <a href="#" class="relative group hover:text-white">
+          Contact
+          <span class="absolute left-0 -bottom-1 w-full h-0.5 bg-indigo-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+        </a>
+      </div>
+      <button id="menu-btn" aria-label="Mobile menu button" class="md:hidden focus:outline-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9 text-indigo-300 hover:text-white transition" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-indigo-800/90 px-6 py-4 space-y-4 font-semibold text-indigo-200">
+      <a href="#" class="block hover:text-white transition">Home</a>
+      <a href="#" class="block hover:text-white transition">Employees</a>
+      <a href="#" class="block hover:text-white transition">About</a>
+      <a href="#" class="block hover:text-white transition">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="flex-grow flex flex-col justify-center items-center px-6 py-28 max-w-5xl mx-auto text-center relative z-10">
+    <h1 class="text-6xl md:text-7xl font-extrabold max-w-4xl leading-tight mb-6 opacity-0 fadeInUp" style="animation-delay: 0.3s;">
+      Welcome to the Employee Management System
+    </h1>
+    <p class="text-lg md:text-xl max-w-3xl mb-12 opacity-0 fadeInUp" style="animation-delay: 0.6s;">
+      Manage your employees with ease, track performance, and simplify HR tasks with our intuitive platform.
+    </p>
+
+    <div class="flex flex-wrap justify-center gap-6 max-w-4xl opacity-0 fadeInUp" style="animation-delay: 0.9s;">
+      <a href="all_Employee" class="relative group px-10 py-4 bg-blue-700 rounded-xl font-semibold shadow-lg transition shadow-blue-600/50 hover:shadow-blue-700/80 hover:-translate-y-1 transform focus:ring-4 focus:ring-blue-400/70">
+        <span class="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 opacity-80 group-hover:opacity-100 transition"></span>
+        <span class="relative text-white">View All Employees</span>
+      </a>
+      <a href="add_Employee" class="relative group px-10 py-4 bg-green-700 rounded-xl font-semibold shadow-lg transition shadow-green-600/50 hover:shadow-green-700/80 hover:-translate-y-1 transform focus:ring-4 focus:ring-green-400/70">
+        <span class="absolute inset-0 rounded-xl bg-gradient-to-r from-green-400 via-green-500 to-green-600 opacity-80 group-hover:opacity-100 transition"></span>
+        <span class="relative text-white">Add Employee</span>
+      </a>
+      <a href="filter_Employee" class="relative group px-10 py-4 bg-yellow-600 rounded-xl font-semibold shadow-lg transition shadow-yellow-500/50 hover:shadow-yellow-600/80 hover:-translate-y-1 transform focus:ring-4 focus:ring-yellow-400/70">
+        <span class="absolute inset-0 rounded-xl bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 opacity-80 group-hover:opacity-100 transition"></span>
+        <span class="relative text-white">Filter Employee Details</span>
+      </a>
+      <a href="remove_Employee" class="relative group px-10 py-4 bg-red-600 rounded-xl font-semibold shadow-lg transition shadow-red-500/50 hover:shadow-red-600/80 hover:-translate-y-1 transform focus:ring-4 focus:ring-red-400/70">
+        <span class="absolute inset-0 rounded-xl bg-gradient-to-r from-red-400 via-red-500 to-red-600 opacity-80 group-hover:opacity-100 transition"></span>
+        <span class="relative text-white">Remove Employee</span>
+      </a>
+    </div>
+  </section>
+
+  <script>
+    // Mobile menu toggle with smooth height animation
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuBtn.addEventListener('click', () => {
+      if (mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.remove('hidden');
+        mobileMenu.style.maxHeight = '0px';
+        mobileMenu.style.opacity = '0';
+        setTimeout(() => {
+          mobileMenu.style.transition = 'max-height 0.4s ease, opacity 0.4s ease';
+          mobileMenu.style.maxHeight = '300px';
+          mobileMenu.style.opacity = '1';
+        }, 10);
+      } else {
+        mobileMenu.style.maxHeight = '0px';
+        mobileMenu.style.opacity = '0';
+        mobileMenu.addEventListener('transitionend', () => {
+          mobileMenu.classList.add('hidden');
+          mobileMenu.style.transition = '';
+        }, { once: true });
+      }
+    });
+  </script>
+
+</body>
+</html>

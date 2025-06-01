@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Remove Employee</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen p-6">
+  <div class="bg-white rounded-xl shadow-lg max-w-md w-full p-8">
+    <h1 class="text-3xl font-semibold mb-8 text-center text-gray-800">Remove Employee</h1>
+&nbsp;
+&nbsp;
+
+    <form id="removeEmployeeForm" class="space-y-6">
+      <div>
+        <label for="empSelect" class="block text-gray-700 font-medium mb-2">Select Employee</label>
+        <select id="empSelect" name="empSelect" class="block w-full rounded-md border border-gray-300 bg-white px-4 py-3 text-gray-900 focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-400 transition">
+          <option value="" disabled selected>Select Employee</option>
+          {% for emp in emps %}
+            <option value="{{ emp.Id }}">{{ emp.first_name }} {{ emp.last_name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+&nbsp;
+&nbsp;
+
+      <button type="submit" class="w-full bg-red-600 text-white py-3 rounded-md font-semibold hover:bg-red-700 transition-colors duration-300">Remove</button>
+    </form>
+  </div>
+&nbsp;
+&nbsp;
+
+  <script>
+    document.getElementById('removeEmployeeForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent default behavior
+      const empId = document.getElementById('empSelect').value;
+      if (empId) {
+        window.location.href = `/remove_Employee/${empId}/`;
+      } else {
+        alert('Please select an employee to remove.');
+      }
+    });
+  </script>
+</body>
+</html>

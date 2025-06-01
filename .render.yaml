@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: django-office-emp
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn office_emp_proj.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.10

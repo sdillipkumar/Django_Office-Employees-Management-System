@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Filter Employee Details - 3 Fields Advanced Dark Orange</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Floating label styles */
+    .floating-label-input {
+      position: relative;
+      width: 100%;
+    }
+    .floating-label-input input {
+      width: 100%;
+      padding: 1.25rem 1rem 0.5rem 1rem;
+      font-size: 1rem;
+      border-radius: 0.75rem;
+      border: 2px solid #d97706; /* amber-600 */
+      background: rgba(255 255 255 / 0.15);
+      color: #f59e0b; /* amber-400 */
+      backdrop-filter: blur(12px);
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+    .floating-label-input input:focus {
+      outline: none;
+      border-color: #ea580c; /* orange-600 */
+      background: rgba(255 255 255 / 0.3);
+      color: #ffedd5; /* amber-100 */
+    }
+    .floating-label-input label {
+      position: absolute;
+      left: 1rem;
+      top: 1.25rem;
+      color: #fbbf24; /* amber-400 */
+      font-weight: 600;
+      pointer-events: none;
+      transition: all 0.25s ease;
+      font-size: 1rem;
+    }
+    .floating-label-input input:focus + label,
+    .floating-label-input input:not(:placeholder-shown) + label {
+      top: 0.25rem;
+      font-size: 0.75rem;
+      color: #f97316; /* orange-500 */
+    }
+
+    /* Card glassmorphism */
+    .glass-card {
+      background: rgba(255 140 0 / 0.15);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255 140 0 / 0.3);
+      box-shadow: 0 8px 32px 0 rgba(255 140 0 / 0.25);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-radius: 1rem;
+      color: #fde68a; /* amber-300 */
+    }
+    .glass-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 12px 48px 0 rgba(255 140 0 / 0.45);
+      color: #ffd54f; /* amber-400 */
+    }
+
+    /* Fade & scale in animation */
+    @keyframes fadeScaleIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    .fade-scale-in {
+      animation: fadeScaleIn 0.35s ease forwards;
+    }
+
+    /* Background subtle animated glow */
+    body::before {
+      content: "";
+      position: fixed;
+      top: -150px; left: -150px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle at center, #f97316 0%, transparent 70%);
+      filter: blur(150px);
+      animation: pulseGlow 6s ease-in-out infinite alternate;
+      z-index: -1;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      bottom: -150px; right: -150px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle at center, #c2410c 0%, transparent 70%);
+      filter: blur(120px);
+      animation: pulseGlow 6s ease-in-out infinite alternate-reverse;
+      z-index: -1;
+    }
+    @keyframes pulseGlow {
+      0% { opacity: 0.4; }
+      100% { opacity: 0.8; }
+    }
+
+    /* Filter summary style */
+    #filterSummary {
+      max-width: 600px;
+      margin: 0 auto 2rem auto;
+      color: #ffbf00;
+      font-weight: 700;
+      font-size: 1.25rem;
+      white-space: pre-line;
+      text-align: center;
+      text-shadow: 0 0 5px #ffa500;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-orange-900 via-orange-800 to-orange-900 min-h-screen flex flex-col items-center p-8 font-extrabold tracking-wide leading-relaxed">
+
+  <div class="max-w-6xl w-full text-center mb-12 select-none text-5xl text-amber-400 drop-shadow-[0_0_10px_rgb(255,140,0)]">
+    Employee Details
+  </div>
+
+  <form class="max-w-4xl w-full mb-4 grid grid-cols-1 md:grid-cols-3 gap-8" action="/filter_Employee" method="post" onsubmit="return false" role="search" aria-label="Filter employee details form">
+    {% csrf_token %}
+    <div class="floating-label-input">
+      <input
+        type="text"
+        id="filterName"
+        placeholder="First Name"
+        autocomplete="off"
+        spellcheck="false"
+        aria-label="Filter by First Name"
+        oninput="filterEmployees()"
+      />
+      <label for="filterName">First Name</label>
+    </div>
+    <div class="floating-label-input">
+      <input
+        type="text"
+        id="filterDept"
+        placeholder="Department"
+        autocomplete="off"
+        spellcheck="false"
+        aria-label="Filter by Department"
+        oninput="filterEmployees()"
+      />
+      <label for="filterDept">Department</label>
+    </div>
+    <div class="floating-label-input">
+      <input
+        type="text"
+        id="filterRole"
+        placeholder="Role"
+        autocomplete="off"
+        spellcheck="false"
+        aria-label="Filter by Role"
+        oninput="filterEmployees()"
+      />
+      <label for="filterRole">Role</label>
+    </div>
+  </form>
+
+  <!-- Filter summary will show here -->
+  <div id="filterSummary" aria-live="polite" role="region" aria-atomic="true"></div>
+
+  
+<main id="employeesGrid" class="max-w-6xl w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" role="list" aria-live="polite">
+  {% for emp in emps %}
+  <article tabindex="0" class="glass-card p-8 cursor-pointer transition relative" 
+           role="listitem" 
+           aria-label="Employee {{ emp.first_name }} {{ emp.last_name }}, {{ emp.role }}, {{ emp.department }} Department"
+           onclick="window.location.href='{% url 'employee_details' emp.Id %}'">
+    <h2 class="text-2xl mb-2 first-name">{{ emp.first_name }}</h2>
+    <p class="text-lg font-semibold role">{{ emp.role }}</p>
+    <p class="text-lg font-normal dept">{{ emp.department }}</p>
+  </article>
+  {% endfor %}
+</main>
+
+
+  <script>
+    function filterEmployees() {
+      const nameFilter = document.getElementById('filterName').value.toLowerCase();
+      const deptFilter = document.getElementById('filterDept').value.toLowerCase();
+      const roleFilter = document.getElementById('filterRole').value.toLowerCase();
+
+      const employees = document.querySelectorAll('#employeesGrid article');
+      let visibleCount = 0;
+
+      employees.forEach(emp => {
+        const name = emp.querySelector('.first-name').textContent.toLowerCase();
+        const dept = emp.querySelector('.dept').textContent.toLowerCase();
+        const role = emp.querySelector('.role').textContent.toLowerCase();
+
+        const matchesName = name.includes(nameFilter);
+        const matchesDept = dept.includes(deptFilter);
+        const matchesRole = role.includes(roleFilter);
+
+        if (matchesName && matchesDept && matchesRole) {
+          emp.style.display = '';
+          visibleCount++;
+        } else {
+          emp.style.display = 'none';
+        }
+      });
+
+      updateFilterSummary(nameFilter, deptFilter, roleFilter, visibleCount);
+    }
+
+    function updateFilterSummary(name, dept, role, count) {
+      const summaryEl = document.getElementById('filterSummary');
+
+      if (!name && !dept && !role) {
+        summaryEl.textContent = '';
+        return;
+      }
+
+      let summaryText = '🔎 Showing results like this:\n';
+      if (name) summaryText += `First Name: ${capitalize(name)}\n`;
+      if (dept) summaryText += `Department: ${capitalize(dept)}\n`;
+      if (role) summaryText += `Role: ${capitalize(role)}\n`;
+      summaryEl.textContent = summaryText;
+    }
+
+    function capitalize(str) {
+      if (!str) return '';
+      return str
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+    }
+
+    function goToDetails(firstName) {
+      // Here redirect to employee_details.html or dynamically generate
+      // For demo, redirect with query param
+      window.location.href = `employee_details.html?name=${encodeURIComponent(firstName)}`;
+    }
+
+    // Initial call to show all employees
+    filterEmployees();
+  </script>
+
+</body>
+</html>

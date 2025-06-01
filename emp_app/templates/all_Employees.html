@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %} All Employees | Employee Management {% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 animate-fade-in-up">
+
+  <!-- Back to Home Button -->
+  <div class="flex justify-end mb-4">
+    <a href="{% url 'index' %}" class="inline-block px-5 py-2 bg-indigo-600 text-white rounded-lg shadow-md hover:bg-indigo-700 transition duration-300 ease-in-out">
+      ← Back to Home
+    </a>
+  </div>
+
+  <h1 class="text-4xl font-extrabold text-indigo-600 mb-8 transition duration-500 ease-in-out hover:text-indigo-800">
+    All Employees
+  </h1>
+
+  <div class="overflow-x-auto bg-white rounded-xl shadow-lg transform transition-all duration-300 hover:scale-[1.01]">
+    <table class="min-w-full text-sm text-gray-700">
+      <thead class="bg-indigo-100 text-indigo-700 uppercase text-xs font-semibold tracking-wider">
+        <tr>
+          <th class="px-6 py-4">ID</th>
+          <th class="px-6 py-4">Name</th>
+          <th class="px-6 py-4">Email</th>
+          <th class="px-6 py-4">Department</th>
+          <th class="px-6 py-4">Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for employee in emps %}
+        <tr class="border-b transition-all duration-300 hover:bg-indigo-50 hover:shadow-sm hover:translate-x-1">
+          <td class="px-6 py-4 font-medium">{{ employee.Id }}</td>
+          <td class="px-6 py-4">
+            <a href="{% url 'employee_details' employee.Id %}" class="text-indigo-600 hover:underline">
+              {{ employee.first_name }} {{ employee.last_name }}
+            </a>
+          </td>
+          <td class="px-6 py-4">{{ employee.email }}</td>
+          <td class="px-6 py-4">{{ employee.dept }}</td>
+          <td class="px-6 py-4">{{ employee.role }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5" class="px-6 py-4 text-center text-red-500">No employees found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
