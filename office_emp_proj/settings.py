@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'office_emp_proj.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ['office_emp_db'],
+        'NAME': os.environ['office-emp-db'],
         'USER': os.environ['office_emp_db_user'],
         'PASSWORD': os.environ['7TvYAaX6u8GzphW0EfpVTeNSAEEH5MZ2'],
         'HOST': os.environ['dpg-d0u06midbo4c73a8enrg-a'],
