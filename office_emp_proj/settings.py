@@ -78,15 +78,10 @@ WSGI_APPLICATION = 'office_emp_proj.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'default': dj_database_url.config(default=os.environ.get('DATABASE_URL')
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ['office_emp_db'],
-        'USER': os.environ['office_emp_db_user'],
-        'PASSWORD': os.environ['7TvYAaX6u8GzphW0EfpVTeNSAEEH5MZ2'],
-        'HOST': os.environ['dpg-d0u06midbo4c73a8enrg-a'],
-        'PORT': os.environ.get('DB_PORT', '5432'),  # Default to 5432 if not set
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600,
+    )
 }
 
 
