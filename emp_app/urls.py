@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.urls import path,include
+from django.conf import settings
+from django.conf.urls.static import static
 # This file is part of the office_emp_proj project.
 from. import views
 urlpatterns = [
@@ -12,6 +14,5 @@ urlpatterns = [
     path('remove_Employee/', views.remove_employee_page, name='remove_employee_page'),
     path('remove_Employee/<int:emp_id>/', views.remove_employee, name='remove_employee'),
     
-
-
 ]
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
