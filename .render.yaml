@@ -18,6 +18,6 @@ services:
       - key: SECRET_KEY
         value:'django-insecure-*2mr@=j@bhpoxi#zc-iw-bkg&l28y(!ztmox&0(tm7o78+shtv'
       - key: DEBUG
-        value: "False"
+        value: False
       - key: ALLOWED_HOSTS
         value: office-employees-management.onrender.com,www.office-employees-management.onrender.com
