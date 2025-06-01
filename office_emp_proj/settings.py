@@ -83,6 +83,7 @@ WSGI_APPLICATION = 'office_emp_proj.wsgi.application'
 
 DATABASES = {
     'default': {
+        'default': dj_database_url.config(default=os.environ.get('DATABASE_URL')
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ['office_emp_db'],
         'USER': os.environ['office_emp_db_user'],
