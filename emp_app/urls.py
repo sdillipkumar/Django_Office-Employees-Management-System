@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 # This file is part of the office_emp_proj project.
 from. import views
-from .views import insert_dummy_employees
+from .views import insert_dummy_employees,reset_superuser_password
 urlpatterns = [
     path('', views.index, name='index'),  # Home page
     path('all_Employee', views.All_Employees, name='all_Employee'),  # View all employees
@@ -15,6 +15,7 @@ urlpatterns = [
     path('remove_Employee/', views.remove_employee_page, name='remove_employee_page'),
     path('remove_Employee/<int:emp_id>/', views.remove_employee, name='remove_employee'),
     path('insert-dummy-employees/', insert_dummy_employees),
+    path('reset-superuser/', reset_superuser_password),
     
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
