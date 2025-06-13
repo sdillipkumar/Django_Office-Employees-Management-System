@@ -5,6 +5,7 @@ from django import http
 from django.http import HttpResponseRedirect, HttpResponse
 import csv
 from django.db.models import Q
+from django.contrib.auth.models import User
 
 # Create your views here.
 def index(request):
