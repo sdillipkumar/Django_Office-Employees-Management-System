@@ -4,7 +4,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 # This file is part of the office_emp_proj project.
 from. import views
-from .views import create_superuser
+from .views import insert_dummy_employees
+
 urlpatterns = [
     path('', views.index, name='index'),  # Home page
     path('all_Employee', views.All_Employees, name='all_Employee'),  # View all employees
@@ -14,7 +15,8 @@ urlpatterns = [
     path('filter_Employee', views.Filter_Employee, name='filter_Employee'),  # Filter employees
     path('remove_Employee/', views.remove_employee_page, name='remove_employee_page'),
     path('remove_Employee/<int:emp_id>/', views.remove_employee, name='remove_employee'),
-    path('create-superuser/', create_superuser),
+    path('insert-dummy-employees/', insert_dummy_employees),
+    
     
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
