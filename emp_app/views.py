@@ -163,7 +163,7 @@ def insert_dummy_employees(request):
                 salary=random.randint(30000, 90000),
                 bonus=random.randint(1000, 7000),
                 role=role,
-                phone=9990000000 + i,
+                phone=900000000 + i,,
                 email=f"testuser{i}@example.com",
                 hire_date=date(2024, 1, min(i, 28))
             )
