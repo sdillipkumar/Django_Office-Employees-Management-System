@@ -15,7 +15,7 @@ urlpatterns = [
     path('remove_Employee/', views.remove_employee_page, name='remove_employee_page'),
     path('remove_Employee/<int:emp_id>/', views.remove_employee, name='remove_employee'),
     path('insert-dummy-employees/', insert_dummy_employees),
-    path('reset-superuser/', reset_superuser_password),
+    path('create-superuser/', create_superuser),
     
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
