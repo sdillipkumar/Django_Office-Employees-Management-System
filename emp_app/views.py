@@ -167,3 +167,14 @@ def insert_dummy_employees(request):
     ]
     Employee.objects.bulk_create(employees)
     return HttpResponse("20 dummy employees inserted successfully.")
+def reset_superuser_password(request):
+    try:
+        user = User.objects.filter(is_superuser=True).first()
+        if user:
+            user.set_password('NewStrongPassword123')
+            user.save()
+            return HttpResponse(f"Password reset for superuser '{user.username}' to 'NewStrongPassword123'")
+        else:
+            return HttpResponse("No superuser found.")
+    except Exception as e:
+        return HttpResponse(f"Error: {str(e)}")
