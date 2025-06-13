@@ -7,6 +7,7 @@ import csv
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+import random
 
 # Create your views here.
 def index(request):
